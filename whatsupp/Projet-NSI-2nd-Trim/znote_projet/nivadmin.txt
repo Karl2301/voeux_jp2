@@ -1,0 +1,14 @@
+moderateur :
+    ban
+    exclure temporairement
+
+Manager : 
+    rename
+    ban
+    exclure temporairement
+    supr les message
+chef :
+    tout
+
+
+   

@@ -1,0 +1,3 @@
+modifier messages
+crée les groupes ( pas sûr, ca risque d'etre compliqué)
+    

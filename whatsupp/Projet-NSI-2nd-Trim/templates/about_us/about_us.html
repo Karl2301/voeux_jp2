@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>À propos de nous</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about_us/about_us.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo_projet.png') }}"/>
+</head>
+<body>
+    <div class="container">
+        <ul>
+            <li class="top-barre"><img width="25px" height="25px" src="{{ url_for('static', filename='img/logo_projet.png') }}"/> WhatsUpp<span class="blue">.</span></li>
+            <a class="blue" href=/login><div class="plus-loin"><div class="gray"><li class="top-barre">Login</li></div></a>
+        </ul>
+    
+        <h1>À propos de nous <span class="white">:<span></h1>
+        <p class="p"> Bienvenue sur la page "À propos de nous" de Whatsupp, l'application de messagerie que nous avons recréée dans le cadre de notre projet de Première en NSI (Numérique et Sciences Informatiques). Nous sommes un groupe d'élèves passionnés par la technologie et l'innovation, et nous avons décidé de relever le défi de développer une application de messagerie performante et intuitive.</p>
+        <h2>Qui sommes-nous ? <span class="blue"> :</span></h2>
+        <p class="petit">Nous sommes une équipe d'élèves de Première, animés par la même passion pour le numérique et la programmation. Ce projet a été l'occasion pour nous de mettre en pratique nos compétences en développement, de collaborer étroitement et d'apprendre les uns des autres.</p>    
+        <h2>Notre projet<span class="blue"> :</span></h2>
+        <p class="petit">Whatsupp est une application de messagerie simple et efficace. Nous avons conçu cette application pour offrir une expérience utilisateur fluide et agréable. Grâce à Whatsupp, vous pouvez échanger des messages instantanément, partager des fichiers et rester connecté avec vos amis et votre famille.</p>
+        <h2>Notre mission <span class="blue"> :</span></h2>
+        <p class="petit">Notre mission est de repousser les limites de ce que nous pouvons accomplir en tant qu'élèves et de démontrer que, même à notre niveau, nous sommes capables de créer des solutions numériques innovantes. Nous espérons que ce projet inspirera d'autres élèves à explorer le monde fascinant du développement informatique.</p>    
+        <p class="petit">Merci de votre soutien.</p>
+    </div>
+    <script scr="{{ url_for('static', filename='js/about_us/about_us.js') }}"></script>
+</body>
+</html>

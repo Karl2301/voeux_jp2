@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <title>WhatsUpp - Panel</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/high_admin_panel/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/high_admin_panel/lineicons.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/high_admin_panel/materialdesignicons.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/high_admin_panel/fullcalendar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/high_admin_panel/main.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo_projet.png') }}"/>
+  </head>
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+
+    <aside class="sidebar-nav-wrapper">
+      <div class="navbar-logo">
+        <a href="/login">
+          <img src="{{ url_for('static', filename='img/high_admin_panel/WhatsUpp.png') }}" alt="logo" width="149" height="28"/>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_1"
+              aria-controls="ddmenu_1"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8.74999 18.3333C12.2376 18.3333 15.1364 15.8128 15.7244 12.4941C15.8448 11.8143 15.2737 11.25 14.5833 11.25H9.99999C9.30966 11.25 8.74999 10.6903 8.74999 10V5.41666C8.74999 4.7263 8.18563 4.15512 7.50586 4.27556C4.18711 4.86357 1.66666 7.76243 1.66666 11.25C1.66666 15.162 4.83797 18.3333 8.74999 18.3333Z" />
+                  <path
+                    d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
+                </svg>
+              </span>
+              <span class="text">Dashboard</span>
+            </a>
+            <ul id="ddmenu_1" class="collapse show dropdown-nav">
+              <li>
+                <a href="/admin_panel" class="active"> Statistiques </a>
+              </li>
+              <li>
+                <a href="/admin_panel_users"> Liste des Utilisateurs </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              class="collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_2"
+              aria-controls="ddmenu_2"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M11.8097 1.66667C11.8315 1.66667 11.8533 1.6671 11.875 1.66796V4.16667C11.875 5.43232 12.901 6.45834 14.1667 6.45834H16.6654C16.6663 6.48007 16.6667 6.50186 16.6667 6.5237V16.6667C16.6667 17.5872 15.9205 18.3333 15 18.3333H5.00001C4.07954 18.3333 3.33334 17.5872 3.33334 16.6667V3.33334C3.33334 2.41286 4.07954 1.66667 5.00001 1.66667H11.8097ZM6.66668 7.70834C6.3215 7.70834 6.04168 7.98816 6.04168 8.33334C6.04168 8.67851 6.3215 8.95834 6.66668 8.95834H10C10.3452 8.95834 10.625 8.67851 10.625 8.33334C10.625 7.98816 10.3452 7.70834 10 7.70834H6.66668ZM6.04168 11.6667C6.04168 12.0118 6.3215 12.2917 6.66668 12.2917H13.3333C13.6785 12.2917 13.9583 12.0118 13.9583 11.6667C13.9583 11.3215 13.6785 11.0417 13.3333 11.0417H6.66668C6.3215 11.0417 6.04168 11.3215 6.04168 11.6667ZM6.66668 14.375C6.3215 14.375 6.04168 14.6548 6.04168 15C6.04168 15.3452 6.3215 15.625 6.66668 15.625H13.3333C13.6785 15.625 13.9583 15.3452 13.9583 15C13.9583 14.6548 13.6785 14.375 13.3333 14.375H6.66668Z" />
+                  <path
+                    d="M13.125 2.29167L16.0417 5.20834H14.1667C13.5913 5.20834 13.125 4.74197 13.125 4.16667V2.29167Z" />
+                </svg>
+              </span>
+              <span class="text">Sanctions</span>
+            </a>
+            <ul id="ddmenu_2" class="collapse dropdown-nav">
+              <li>
+                <a href="/user_banned"> Listes des sanctions </a>
+              </li>
+              <li>
+                <a href="/user_report"> Signalements</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="/admin_app_settings">
+              <span class="icon">
+                <svg fill="#000000" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9 13.829A3.004 3.004 0 0 0 11 11a3.003 3.003 0 0 0-2-2.829V0H7v8.171A3.004 3.004 0 0 0 5 11c0 1.306.836 2.417 2 2.829V16h2v-2.171zm-5-6A3.004 3.004 0 0 0 6 5a3.003 3.003 0 0 0-2-2.829V0H2v2.171A3.004 3.004 0 0 0 0 5c0 1.306.836 2.417 2 2.829V16h2V7.829zm10 0A3.004 3.004 0 0 0 16 5a3.003 3.003 0 0 0-2-2.829V0h-2v2.171A3.004 3.004 0 0 0 10 5c0 1.306.836 2.417 2 2.829V16h2V7.829zM12 6V4h2v2h-2zM2 6V4h2v2H2zm5 6v-2h2v2H7z" fill-rule="evenodd"></path> </g></svg>
+              </span>
+              <span class="text">Paramètres</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="main-wrapper">
+      <header class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-6">
+              <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn mr-15">
+                  <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                    <i class="lni lni-chevron-left me-2"></i> Menu
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    <div class="overlay"></div>
+
+      <section class="section">
+        <div class="container-fluid">
+
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>WhatsUpp - Panel Admin</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a style="color: white;" href="#0">Admin</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Panel Admin
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon purple">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="#343C54" xmlns="http://www.w3.org/2000/svg" transform="rotate(0 0 0)">
+                    <path d="M6.25 9.77344C6.25 9.35922 6.58579 9.02344 7 9.02344H17C17.4142 9.02344 17.75 9.35922 17.75 9.77344C17.75 10.1877 17.4142 10.5234 17 10.5234H7C6.58579 10.5234 6.25 10.1877 6.25 9.77344Z" fill="#343C54"/>
+                    <path d="M7 12.0234C6.58579 12.0234 6.25 12.3592 6.25 12.7734C6.25 13.1877 6.58579 13.5234 7 13.5234H12C12.4142 13.5234 12.75 13.1877 12.75 12.7734C12.75 12.3592 12.4142 12.0234 12 12.0234H7Z" fill="#343C54"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 5.53125C2.5 4.28861 3.50736 3.28125 4.75 3.28125H19.25C20.4926 3.28125 21.5 4.28861 21.5 5.53125V16.0796C21.5 17.3223 20.4926 18.3296 19.25 18.3296H15.1014L12.6025 21.6956C12.461 21.8861 12.2377 21.9985 12.0003 21.9985C11.763 21.9985 11.5396 21.8861 11.3981 21.6956L8.89931 18.3296H4.75C3.50736 18.3296 2.5 17.3223 2.5 16.0796V5.53125ZM4.75 4.78125C4.33579 4.78125 4 5.11704 4 5.53125V16.0796C4 16.4938 4.33579 16.8296 4.75 16.8296H9.2766C9.51396 16.8296 9.73731 16.942 9.87879 17.1326L12.0003 19.9903L14.1219 17.1326C14.2634 16.942 14.4867 16.8296 14.7241 16.8296H19.25C19.6642 16.8296 20 16.4938 20 16.0796V5.53125C20 5.11704 19.6642 4.78125 19.25 4.78125H4.75Z" fill="#343C54"/>
+                    </svg>         
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Messages envoyé aujourd'hui</h6>
+                  <h3 class="text-bold mb-10" id="message_today">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon success">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#15c650"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 18.7023C18 15.6706 14.5 15 12 15C9.5 15 6 15.6706 6 18.7023M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM15 9C15 10.6569 13.6569 12 12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Utilisateurs en ligne</h6>
+                  <h3 class="text-bold mb-10" id="online_users">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon primary">
+                  <svg width="30" height="30" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="1.344"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M4 1C3.44772 1 3 1.44772 3 2V22C3 22.5523 3.44772 23 4 23C4.55228 23 5 22.5523 5 22V13.5983C5.46602 13.3663 6.20273 13.0429 6.99251 12.8455C8.40911 12.4914 9.54598 12.6221 10.168 13.555C11.329 15.2964 13.5462 15.4498 15.2526 15.2798C17.0533 15.1004 18.8348 14.5107 19.7354 14.1776C20.5267 13.885 21 13.1336 21 12.3408V5.72337C21 4.17197 19.3578 3.26624 18.0489 3.85981C16.9875 4.34118 15.5774 4.87875 14.3031 5.0563C12.9699 5.24207 12.1956 4.9907 11.832 4.44544C10.5201 2.47763 8.27558 2.24466 6.66694 2.37871C6.0494 2.43018 5.47559 2.53816 5 2.65249V2C5 1.44772 4.55228 1 4 1ZM5 4.72107V11.4047C5.44083 11.2247 5.95616 11.043 6.50747 10.9052C8.09087 10.5094 10.454 10.3787 11.832 12.4455C12.3106 13.1634 13.4135 13.4531 15.0543 13.2897C16.5758 13.1381 18.1422 12.6321 19 12.3172V5.72337C19 5.67794 18.9081 5.66623 18.875 5.68126C17.7575 6.18804 16.1396 6.81972 14.5791 7.03716C13.0776 7.24639 11.2104 7.1185 10.168 5.55488C9.47989 4.52284 8.2244 4.25586 6.83304 4.3718C6.12405 4.43089 5.46427 4.58626 5 4.72107Z" fill="#0F0F0F"></path> </g></svg>
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Signalement à traiter</h6>
+                  <h3 class="text-bold mb-10" id="report_count">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon orange">
+                  <svg fill="#000000" width="30" height="30" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>users</title> <path d="M16 21.416c-5.035 0.022-9.243 3.537-10.326 8.247l-0.014 0.072c-0.018 0.080-0.029 0.172-0.029 0.266 0 0.69 0.56 1.25 1.25 1.25 0.596 0 1.095-0.418 1.22-0.976l0.002-0.008c0.825-3.658 4.047-6.35 7.897-6.35s7.073 2.692 7.887 6.297l0.010 0.054c0.127 0.566 0.625 0.982 1.221 0.982 0.69 0 1.25-0.559 1.25-1.25 0-0.095-0.011-0.187-0.031-0.276l0.002 0.008c-1.098-4.78-5.305-8.295-10.337-8.316h-0.002zM9.164 11.102c0 0 0 0 0 0 2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM9.164 3.25c0 0 0 0 0 0 1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM22.926 11.102c2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM22.926 3.25c1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM31.311 19.734c-0.864-4.111-4.46-7.154-8.767-7.154-0.395 0-0.784 0.026-1.165 0.075l0.045-0.005c-0.93-2.116-3.007-3.568-5.424-3.568-2.414 0-4.49 1.448-5.407 3.524l-0.015 0.038c-0.266-0.034-0.58-0.057-0.898-0.063l-0.009-0c-4.33 0.019-7.948 3.041-8.881 7.090l-0.012 0.062c-0.018 0.080-0.029 0.173-0.029 0.268 0 0.691 0.56 1.251 1.251 1.251 0.596 0 1.094-0.417 1.22-0.975l0.002-0.008c0.684-2.981 3.309-5.174 6.448-5.186h0.001c0.144 0 0.282 0.020 0.423 0.029 0.056 3.218 2.679 5.805 5.905 5.805 3.224 0 5.845-2.584 5.905-5.794l0-0.006c0.171-0.013 0.339-0.035 0.514-0.035 3.14 0.012 5.765 2.204 6.442 5.14l0.009 0.045c0.126 0.567 0.625 0.984 1.221 0.984 0.69 0 1.249-0.559 1.249-1.249 0-0.094-0.010-0.186-0.030-0.274l0.002 0.008zM16 18.416c-0 0-0 0-0.001 0-1.887 0-3.417-1.53-3.417-3.417s1.53-3.417 3.417-3.417c1.887 0 3.417 1.53 3.417 3.417 0 0 0 0 0 0.001v-0c-0.003 1.886-1.53 3.413-3.416 3.416h-0z"></path> </g></svg>
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Total des utilisateurs</h6>
+                  <h3 class="text-bold mb-10" id="total_users">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+          </div>
+
+
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon yellow">
+                  <svg height="30" width="30" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#000000;} </style> <g> <path class="st0" d="M326.75,128.859c-4.914-9.385-10.558-17.846-16.12-23.851c6.891-10.373,10.928-22.798,10.928-36.211 C321.55,32.595,292.202,3.247,256,3.238c-36.202,0.009-65.55,29.357-65.55,65.558c0,13.394,4.037,25.838,10.928,36.211 c-5.571,6.005-11.206,14.466-16.12,23.851c-4.933,9.515-9.025,19.704-10.568,29.292c-0.508,3.187-0.748,6.3-0.748,9.312 c-0.037,10.023,2.855,19.075,7.916,26.373c7.602,11.02,19.343,17.976,32.304,22.317c13.006,4.324,27.528,6.125,41.836,6.134 c19.085-0.046,38.529-3.132,54.28-11.399c7.861-4.148,14.826-9.709,19.87-17.052c5.053-7.298,7.944-16.342,7.916-26.373 c0-3.022-0.24-6.125-0.758-9.312C335.775,148.562,331.683,138.374,326.75,128.859z M222.394,35.191 c8.628-8.628,20.452-13.93,33.606-13.93c13.154,0,24.988,5.303,33.615,13.93c8.61,8.628,13.931,20.461,13.931,33.606 c-0.01,13.154-5.312,24.969-13.931,33.606c-8.628,8.609-20.461,13.92-33.615,13.92c-13.154-0.008-24.978-5.311-33.606-13.92 c-8.62-8.628-13.931-20.452-13.931-33.606C208.464,55.652,213.775,43.819,222.394,35.191z M315.296,183.656 c-4.481,6.568-12.545,11.88-23.159,15.408c-10.558,3.529-23.352,5.21-36.137,5.191c-17.034,0.046-34.105-3.03-45.864-9.311 c-5.894-3.104-10.411-6.91-13.423-11.308c-3.002-4.416-4.73-9.459-4.757-16.174c0-2.004,0.166-4.185,0.527-6.513 c0.988-6.439,4.416-15.501,8.748-23.759c3.87-7.464,8.498-14.318,12.221-18.595c11.454,9.8,26.298,15.75,42.548,15.75 c16.258,0,31.103-5.949,42.557-15.741c3.714,4.268,8.35,11.122,12.221,18.586c4.332,8.258,7.76,17.32,8.738,23.759 c0.37,2.328,0.536,4.489,0.536,6.513C320.026,174.178,318.298,179.222,315.296,183.656z"></path> <path class="st0" d="M152.817,400.055c-4.923-9.386-10.558-17.848-16.138-23.852c6.91-10.364,10.947-22.817,10.947-36.22 c-0.01-36.212-29.357-65.55-65.559-65.559c-36.202,0.01-65.54,29.348-65.55,65.559c0,13.394,4.037,25.837,10.938,36.22 c-5.561,5.986-11.224,14.447-16.138,23.852c-4.933,9.514-9.016,19.694-10.568,29.283C0.25,432.533,0,435.638,0,438.649 c-0.027,10.014,2.855,19.085,7.917,26.383c7.603,11.011,19.352,17.976,32.304,22.318c13.016,4.332,27.527,6.115,41.846,6.133 c19.085-0.037,38.538-3.132,54.289-11.399c7.842-4.156,14.825-9.718,19.851-17.043c5.053-7.307,7.953-16.36,7.926-26.373 c0-3.03-0.25-6.134-0.758-9.33C161.832,419.749,157.74,409.569,152.817,400.055z M48.461,306.368 c8.637-8.61,20.461-13.912,33.606-13.931c13.154,0.019,24.978,5.321,33.606,13.931c8.629,8.628,13.921,20.452,13.93,33.615 c-0.009,13.144-5.302,24.969-13.93,33.615c-8.628,8.609-20.452,13.912-33.606,13.912c-13.145,0-24.978-5.303-33.616-13.912 c-8.61-8.646-13.912-20.471-13.912-33.615C34.54,326.82,39.842,314.996,48.461,306.368z M141.363,454.842 c-4.481,6.586-12.554,11.889-23.159,15.418c-10.549,3.529-23.362,5.21-36.137,5.21c-17.034,0.037-34.114-3.049-45.864-9.32 c-5.902-3.123-10.411-6.92-13.431-11.326c-3.002-4.416-4.73-9.469-4.748-16.175c0-2.014,0.166-4.185,0.536-6.503 c0.98-6.448,4.398-15.5,8.739-23.759c3.87-7.473,8.508-14.318,12.23-18.604c11.446,9.81,26.29,15.759,42.539,15.759 c16.249,0,31.084-5.949,42.539-15.74c3.722,4.258,8.36,11.113,12.23,18.586c4.342,8.259,7.76,17.311,8.739,23.759 c0.369,2.31,0.536,4.489,0.536,6.522C146.083,445.374,144.356,450.426,141.363,454.842z"></path> <path class="st0" d="M511.252,429.338c-1.552-9.589-5.635-19.769-10.568-29.283c-4.914-9.404-10.577-17.866-16.138-23.852 c6.901-10.384,10.938-22.826,10.938-36.22c-0.01-36.212-29.348-65.55-65.55-65.559c-36.202,0.01-65.55,29.348-65.559,65.559 c0,13.394,4.037,25.837,10.938,36.22c-5.561,5.986-11.215,14.466-16.138,23.86c-4.914,9.506-9.006,19.686-10.558,29.274 c-0.498,3.195-0.748,6.3-0.748,9.33c-0.028,10.014,2.864,19.066,7.916,26.373c7.612,11.002,19.344,17.976,32.304,22.309 c13.015,4.332,27.537,6.115,41.846,6.133c19.085-0.037,38.539-3.132,54.289-11.399c7.851-4.156,14.826-9.718,19.86-17.052 c5.044-7.298,7.944-16.35,7.917-26.383C512,435.638,511.741,432.533,511.252,429.338z M396.328,306.368 c8.628-8.61,20.452-13.912,33.606-13.921c13.144,0.01,24.968,5.312,33.606,13.921c8.619,8.628,13.921,20.452,13.921,33.615 c0,13.144-5.302,24.969-13.921,33.615c-8.628,8.609-20.461,13.912-33.606,13.912c-13.154,0-24.978-5.303-33.606-13.912 c-8.628-8.646-13.93-20.471-13.93-33.615C382.397,326.82,387.7,314.996,396.328,306.368z M489.23,454.842 c-4.481,6.586-12.545,11.889-23.159,15.418c-10.549,3.529-23.361,5.21-36.137,5.21c-17.044,0.037-34.123-3.049-45.864-9.312 c-5.894-3.122-10.42-6.928-13.432-11.316c-2.993-4.424-4.72-9.468-4.748-16.174c0-2.023,0.167-4.194,0.527-6.522 c0.988-6.448,4.406-15.5,8.748-23.759c3.861-7.473,8.498-14.318,12.222-18.604c11.454,9.81,26.298,15.759,42.548,15.759 c16.249,0,31.084-5.949,42.539-15.74c3.722,4.258,8.36,11.113,12.23,18.586c4.342,8.259,7.76,17.311,8.739,23.759 c0.369,2.318,0.536,4.489,0.536,6.503C493.95,445.374,492.231,450.418,489.23,454.842z"></path> <path class="st0" d="M102.629,211.008l-19.5-4.388c4.185-13.561,11.021-26.271,20.203-37.32 c4.766-5.745,10.179-11.047,16.202-15.777c5.867-4.61,12.24-8.693,19.168-12.083l-7.953-16.175 c-8.102,3.981-15.556,8.749-22.346,14.088c-7.03,5.534-13.357,11.731-18.937,18.428c-11.03,13.275-19.084,28.581-23.925,44.876 l-22.317-5.016l22.28,49.015L102.629,211.008z"></path> <path class="st0" d="M281.948,470.796c-7.991,1.838-16.202,2.789-24.442,2.789c-6.096,0-12.212-0.517-18.29-1.552 c-7.354-1.266-14.65-3.298-21.754-6.152c-6.919-2.752-13.644-6.254-20.064-10.549l-10.014,15.001 c7.501,5.007,15.344,9.072,23.38,12.277c8.295,3.326,16.822,5.709,25.412,7.178c7.085,1.219,14.226,1.81,21.33,1.81 c10.068,0,20.064-1.256,29.8-3.603l6.475,20.766l31.306-43.786l-49.42-14.336L281.948,470.796z"></path> <path class="st0" d="M406.322,166.53c10.106,10.623,18.096,23.241,23.241,37.18c2.596,6.993,4.481,14.346,5.561,21.921 c0.74,5.108,1.118,10.3,1.118,15.575c0,2.337-0.074,4.692-0.231,7.075l17.985,1.164c0.176-2.762,0.269-5.506,0.269-8.24 c0-6.152-0.453-12.212-1.294-18.143c-1.274-8.849-3.472-17.432-6.503-25.597c-6.142-16.646-15.759-31.62-27.924-44.183 l15.325-16.619l-53.577-5.201l12.295,49.957L406.322,166.53z"></path> </g> </g></svg>       
+                </div>
+                <div class="content">
+                  <h6 class="mb-10">Moy. amis par pers.</h6>
+                  <h3 class="text-bold mb-10" id="friends_per_user">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon cyan">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 9V7.2C18 6.0799 18 5.51984 17.782 5.09202C17.5903 4.71569 17.2843 4.40973 16.908 4.21799C16.4802 4 15.9201 4 14.8 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.0799 4 7.2V18L8 16M20 20L17.8062 18.5374C17.5065 18.3377 17.3567 18.2378 17.1946 18.167C17.0507 18.1042 16.9 18.0586 16.7454 18.031C16.5713 18 16.3912 18 16.0311 18H11.2C10.0799 18 9.51984 18 9.09202 17.782C8.71569 17.5903 8.40973 17.2843 8.21799 16.908C8 16.4802 8 15.9201 8 14.8V12.2C8 11.0799 8 10.5198 8.21799 10.092C8.40973 9.71569 8.71569 9.40973 9.09202 9.21799C9.51984 9 10.0799 9 11.2 9H16.8C17.9201 9 18.4802 9 18.908 9.21799C19.2843 9.40973 19.5903 9.71569 19.782 10.092C20 10.5198 20 11.0799 20 12.2V20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                </div>
+                <div class="content">
+                  <h6 class="mb-10">Moy. messages par pers.</h6>
+                  <h3 class="text-bold mb-10" id="messages_per_user">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon red">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.364 18.364C19.9926 16.7353 21 14.4853 21 12C21 7.02944 16.9706 3 12 3C9.51472 3 7.26472 4.00736 5.63604 5.63604M18.364 18.364C16.7353 19.9926 14.4853 21 12 21C7.02944 21 3 16.9706 3 12C3 9.51472 4.00736 7.26472 5.63604 5.63604M18.364 18.364L5.63604 5.63604" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                </div>
+                <div class="content">
+                  <h6 class="mb-10">Bannissements</h6>
+                  <h3 class="text-bold mb-10" id="bannissements">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+            <div class="col-xl-3 col-lg-4 col-sm-6">
+              <div class="icon-card mb-30">
+                <div class="icon pink">
+                  <svg fill="#000000" width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="unread"> <g> <path d="M10.182,6.314a10.215,10.215,0,0,1,7.9,1.782,9.145,9.145,0,0,1,2.5,2.817,1.875,1.875,0,0,1,.082,2.024,9.266,9.266,0,0,1-1.485,2.008c-.446.464.26,1.172.707.707,1.1-1.144,2.533-2.86,1.9-4.554a8.845,8.845,0,0,0-2.721-3.5A11.243,11.243,0,0,0,9.916,5.35c-.633.11-.364,1.074.266.964Z"></path> <path d="M19.824,19.11q-3.045-3.045-6.09-6.08c-.93-.93-1.85-1.86-2.77-2.77Q8.849,8.145,6.754,6.04L4.894,4.18c-.45-.45-1.16.26-.71.71l1.9,1.9a10.42,10.42,0,0,0-3.22,3.12,3.743,3.743,0,0,0-.8,2.28,4.581,4.581,0,0,0,.99,2.17,10.925,10.925,0,0,0,8.18,4.5A11.379,11.379,0,0,0,17,17.71l.25.25,1.86,1.86C19.564,20.27,20.274,19.56,19.824,19.11Zm-10.3-8.88c.25.24.49.49.73.73A2.039,2.039,0,0,0,12,14.03a2.023,2.023,0,0,0,1.04-.28c.25.24.49.49.73.73a3.047,3.047,0,0,1-4.25-4.25Zm-3.7,5.6a9.558,9.558,0,0,1-1.81-1.84c-.53-.71-1.19-1.62-.85-2.55a8.348,8.348,0,0,1,3.65-3.92c.67.67,1.34,1.33,2,2a4.04,4.04,0,0,0,5.67,5.67c.6.59,1.19,1.19,1.78,1.78A10.4,10.4,0,0,1,5.824,15.83Z"></path> </g> </g> </g></svg>                </div>
+                <div class="content">
+                  <h6 class="mb-10">Messages non lu</h6>
+                  <h3 class="text-bold mb-10" id="unread_messages">----</h3>
+                </div>
+              </div>
+              <!-- End Icon Cart -->
+            </div>
+            <!-- End Col -->
+          </div>
+          <!-- End Row -->
+          <div class="row">
+            <div class="col-lg-12">
+                <div class="card-style mb-30">
+                    <h6 class="mb-10">Utilisateurs les plus actifs</h6>
+                    <p class="text-sm mb-20" style="color: #adb5bd;">
+                        Les utilisateurs les plus actifs sont calculés selon leurs nombre de message envoyées
+                    </p>
+                    <div class="table-wrapper table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="lead-phone">
+                                        <h6>Prénom / Nom</h6>
+                                    </th>
+                                    <th class="lead-phone">
+                                        <h6>Email</h6>
+                                    </th>
+                                    <th class="lead-phone">
+                                        <h6>Nom d'utilisateur</h6>
+                                    </th>
+                                    <th class="lead-phone">
+                                        <h6>Status</h6>
+                                    </th>
+                                    <th>
+                                        <h6>Messages</h6>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="user_most_active">
+                            </tbody>
+                        </table>
+                        <!-- end table -->
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- End Row -->
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="card-style mb-30">
+                  <h6 class="mb-10">Utilisateurs les plus récents</h6>
+                  <p class="text-sm mb-20" style="color: #adb5bd;">
+                      Les utilisateurs les plus récents sont calculés selon leurs date d'inscription
+                  </p>
+                  <div class="table-wrapper table-responsive">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th class="lead-phone">
+                                      <h6>Prénom / Nom</h6>
+                                  </th>
+                                  <th class="lead-phone">
+                                      <h6>Email</h6>
+                                  </th>
+                                  <th class="lead-phone">
+                                      <h6>Nom d'utilisateur</h6>
+                                  </th>
+                                  <th class="lead-phone">
+                                      <h6> Status</h6>
+                                  </th>
+                                  <th class="lead-phone">
+                                    <h6> Status du compte</h6>
+                                  </th>
+                                  <th>
+                                    <h6>Date d'inscription</h6>
+                                  </th>
+
+                              </tr>
+                          </thead>
+                          <tbody id="user_recent">
+                          </tbody>
+                      </table>
+                      <!-- end table -->
+                  </div>
+              </div>
+              <!-- end card -->
+          </div>
+          <!-- end col -->
+      </div>
+      </section>
+    </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/high_admin_panel/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/high_admin_panel/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/high_admin_panel/dynamic-pie-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/high_admin_panel/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/high_admin_panel/polyfill.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/high_admin_panel/main.js') }}"></script>
+  </body>
+</html>

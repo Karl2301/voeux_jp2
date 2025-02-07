@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration des Utilisateurs</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+
+<body>
+    <h2>Administration des Utilisateurs</h2>
+    <a href="/dashboard" class="dashboard-button">
+        <span class="material-symbols-outlined">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>
+            </svg>
+        </span>
+        <span>Dashboard</span>
+    </a>
+<br>
+<br>
+    <a href="/reports"><span class="ri-auction-fill">
+        <svg height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path d="M680-280q25 0 42.5-17.5T740-340q0-25-17.5-42.5T680-400q-25 0-42.5 17.5T620-340q0 25 17.5 42.5T680-280Zm0 120q31 0 57-14.5t42-38.5q-22-13-47-20t-52-7q-27 0-52 7t-47 20q16 24 42 38.5t57 14.5ZM480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v227q-19-8-39-14.5t-41-9.5v-147l-240-90-240 90v188q0 47 12.5 94t35 89.5Q310-290 342-254t71 60q11 32 29 61t41 52q-1 0-1.5.5t-1.5.5Zm200 0q-83 0-141.5-58.5T480-280q0-83 58.5-141.5T680-480q83 0 141.5 58.5T880-280q0 83-58.5 141.5T680-80ZM480-494Z"/>
+        </svg>
+        </span><span>reports</span>
+    </a>
+    <br>
+    <br>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Admin perms</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <form action="{{ url_for('update_user', user_id=user['id']) }}" method="post">
+                <td>{{ user['id'] }}</td>
+                <td><input type="text" name="first_name" value="{{ user['first_name'] }}"></td>
+                <td><input type="text" name="last_name" value="{{ user['last_name'] }}"></td>
+                <td><input type="text" name="username" value="{{ user['username'] }}"></td>
+                <td><input type="email" name="email" value="{{ user['email'] }}"></td>
+                <td>
+                    <select name="admin">
+                        <option value="1" {% if user['admin'] %}selected{% endif %}>Oui</option>
+                        <option value="0" {% if not user['admin'] %}selected{% endif %}>Non</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="admin_level">
+                        <option value="0" {% if user['admin_level'] == 0 %}selected{% endif %}>Petite merde</option>
+                        <option value="1" {% if user['admin_level'] == 1 %}selected{% endif %}>Merde distinguer</option>
+                        <option value="2" {% if user['admin_level'] == 2 %}selected{% endif %}>Moderateur</option>
+                        <option value="3" {% if user['admin_level'] == 3 %}selected{% endif %}>Manager</option>
+                        <option value="4" {% if user['admin_level'] == 4 %}selected{% endif %}>Chef</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit">Mettre à jour</button>
+                    <button formaction="{{ url_for('delete_user', user_id=user['id']) }}" type="submit">Supprimer</button>
+                </td>
+            </form>
+        </tr>        
+        {% endfor %}
+    </table>
+</body>
+
+</html>
