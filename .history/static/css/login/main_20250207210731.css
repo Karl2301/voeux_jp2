@@ -50,7 +50,7 @@ body {
 
 .container::before {
   content: "";
-  background: url('/static/img/background.jpg') center right -500px/cover no-repeat;
+  background: url('/static/img/background.jpg') center right -400px/cover no-repeat;
   filter: hue-rotate(15deg);
   position: absolute;
   width: 100%;
