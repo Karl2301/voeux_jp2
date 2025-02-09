@@ -4,7 +4,6 @@ from typing import Optional
 import pandas as pd
 import os
 
-
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
 
