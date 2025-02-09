@@ -29,3 +29,5 @@ Cette application permet une gestion complète des élèves et des professeurs d
 ### 6. **Page et compte Super Administrateur**
    - Prévoir un compte "Super Administrateur" pour gérer les professeurs et les comptes des élèves sur le site.
    - Le super administrateur aura des droits complets sur l'ensemble de l'application, y compris la gestion des comptes des professeurs et des élèves.
+
+### 7. Karl est beau
