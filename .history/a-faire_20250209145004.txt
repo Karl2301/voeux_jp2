@@ -1,0 +1,20 @@
+Les choses à faire:
+
+    - Utiliser le Websocket pour actualiser les valeurs du dashboard ( les cards qui se trouvent en haut de la page (nom d'élèves connéctées ...))
+    - Un menu paramètre qui permet d'activer plusieurs options
+    - Un bouton de confirmation définitifs des voeux > Le bouton demande a l'utilisateur si il est vraiment sûr de confirmer
+        - Lorsque la confirmation est faite, l'utilisateur ne peut plus modifier l'ordre des voeux ( faire en sorte que l'utilisateur ne puisse pas mofidier le code javascript pour bypass les modifications refusées )
+        - Lorsqu'il a confirmer la valeur dédiée dans la base sql passe à True.
+        - Lorsque on update les valeurs du tableau dans le fichier /routes/update_data.py, il faut vérifier si la valeur dédiée dans la base sql est bien a False avant de faire les modifications
+
+    - Page d'identifiants perdue 
+        - Une ligne dans la base sql dans le tableau identifiants_perdue est ajoutée avec les informations nécessaire ( voir la class dans le fichier SQLClassSQL.py pour voir les informations nécessaires )
+
+    - Page Professeurs
+        - Permetre de liée une classe a son PP ( Professeurs Principal )
+        - Afficher les élèves qui ont fait une demande d'identifiants perdues sur le dashboard des Professeurs
+        - Permetre de voir les stats des élèves du Professeur
+
+    - Page et compte super administrateur
+        - Prévoir un compte super admin pour la gestion des professeur et des comptes des élèves sur le site
+        - A TOUS les droits 
