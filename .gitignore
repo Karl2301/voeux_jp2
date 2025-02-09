@@ -1,10 +1,6 @@
 # Ignorer les dossiers __pycache__
 __pycache__/
 
-# Ignorer les dossiers /routes/__pycache__
-
-routes/__pycache__/
-
 # Ignorer les fichiers de configuration spécifiques à l'IDE
 .vscode/
 
