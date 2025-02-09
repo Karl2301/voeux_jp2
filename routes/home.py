@@ -4,8 +4,7 @@ Fonctions:
 """
 
 from flask import Flask, request, render_template, redirect, url_for, flash, session, make_response, jsonify, abort
-from SQLClassSQL import Student
-from ext_config import app, engine
+from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json

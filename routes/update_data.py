@@ -11,8 +11,7 @@ Ce fichier est utilisé lorsque l'utilisateur souhaite mettre à jour ses voeux 
 """
 
 from flask import Flask, request, render_template, redirect, url_for, flash, session, make_response, jsonify, abort
-from SQLClassSQL import Student
-from ext_config import app, engine
+from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
@@ -28,14 +27,11 @@ def update_data():
             if user:
                 try:
                     updated_data = request.json
-                    print("Updated data received:", updated_data)  # Log des données reçues
                     voeux_etablissements = json.loads(user.voeux_etablissements)
-                    print("Current voeux_etablissements:", voeux_etablissements)  # Log des voeux actuels
 
                     user.voeux_etablissements = str(updated_data).replace("'", '"')
                     session.add(user)
                     session.commit()
-                    print("Updated voeux_etablissements:", voeux_etablissements)  # Log des voeux mis à jour
                     return jsonify({'success': True})
                 except Exception as e:
                     session.rollback()
