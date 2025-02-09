@@ -12,3 +12,4 @@ from .dashboard import dashboard
 from .logout import logout
 from .get_data import get_data
 from .update_data import update_data
+from .settings import settings

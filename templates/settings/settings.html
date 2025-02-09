@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings/style.css') }}">
+    
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <img class="logo" width="60px" height="60px" src="{{ url_for('static', filename='img/logo_jp2.png') }}" style="margin-right: 10px;">
+                        </span>
+                        <span class="title">Vœux Jean-Paul II</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="dashboard">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Tableau de Bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Élèves</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Aide</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Paramètres</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mot de Passe</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/logout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Déconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Rechercher ici">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <span>Admin</span>
+                </div>
+            </div>
+
+            <!-- ======================= Cartes ================== -->
+            <div class="cardBox">
+                
+
+            <!-- ================ Liste des Vœux des Élèves ================= -->
+            <div class="settingsContainer">
+                <h2>Paramètres</h2>
+                
+                <div class="settingsItem">
+                    <span>Mode Sombre</span>
+                    <button id="theme-toggle">Activer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const themeToggle = document.getElementById("theme-toggle");
+            const body = document.body;
+            const siteToggle = document.getElementById("site-toggle");
+            
+            if (localStorage.getItem("dark-theme") === "enabled") {
+                body.classList.add("dark-theme");
+                themeToggle.textContent = "☀️";
+            }
+
+            themeToggle.addEventListener("click", function () {
+                body.classList.toggle("dark-theme");
+                if (body.classList.contains("dark-theme")) {
+                    localStorage.setItem("dark-theme", "enabled");
+                    themeToggle.textContent = "☀️";
+                } else {
+                    localStorage.setItem("dark-theme", "disabled");
+                    themeToggle.textContent = "🌙";
+                }
+            });
+
+            siteToggle.addEventListener("click", function () {
+                if (siteToggle.textContent === "Ouvert") {
+                    siteToggle.textContent = "Fermé";
+                    siteToggle.style.backgroundColor = "red";
+                } else {
+                    siteToggle.textContent = "Ouvert";
+                    siteToggle.style.backgroundColor = "green";
+                }
+            });
+        });
+    </script>
+       <!-- =========== Scripts =========  -->
+       <script src="{{ url_for('static', filename='js/dashboard/main.js') }}"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+       <!-- ====== ionicons ======= -->
+       <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
