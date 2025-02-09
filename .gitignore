@@ -19,3 +19,6 @@ env/
 
 # Ignorer le dossier .history
 .history/
+
+# Ignorer les fichiers .DS_Store
+.DS_Store
