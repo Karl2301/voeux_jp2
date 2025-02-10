@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24) 
 
 # Configuration de la base de données MariaDB
-DATABASE_URL = "mysql+pymysql://nsidb:123nsi!bd@localhost/jp2_voeux_parcoursup"
-# DATABASE_URL = "sqlite:///database.sqlite3"
+# DATABASE_URL = "mysql+pymysql://nsidb:123nsi!bd@localhost/jp2_voeux_parcoursup"
+DATABASE_URL = "sqlite:///database.sqlite3"
 engine = create_engine(DATABASE_URL)
 
 SQLModel.metadata.create_all(engine)
