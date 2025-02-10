@@ -13,9 +13,6 @@ from .logout import logout
 from .get_data import get_data
 from .update_data import update_data
 from .settings import settings
-<<<<<<< HEAD:routes/__init__.py
-=======
 from .lost_id import lost_id_get, lost_id_post
 from .test import vers_ma_page, vers_ma_page_post
 from .update_theme import update_theme, get_theme
->>>>>>> ff0dfbf (update project):Sans titre/__init__.py
