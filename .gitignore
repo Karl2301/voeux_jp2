@@ -16,7 +16,7 @@ database.sqlite3
 .ipynb_checkpoints/
 
 # Ignorer les environnements virtuels
-venv/
+.venv/
 env/
 
 # Ignorer le dossier .history

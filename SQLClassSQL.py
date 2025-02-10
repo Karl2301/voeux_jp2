@@ -11,6 +11,7 @@ class Student(SQLModel, table=True):
     online: Optional[bool] = Field(default=None)
     deja_connecte: Optional[bool] = Field(default=None)
     choix_validees: Optional[bool] = Field(default=None)
+    dashboard_theme: Optional[bool] = Field(default=0)
 
 class IdentifiantPerdue(SQLModel, table=True):
     __tablename__ = "identifiants_perdus"
@@ -29,5 +30,6 @@ class Professeurs(SQLModel, table=True):
     email: Optional[str] = Field(default=None, sa_column=Column(TEXT))
     password: Optional[str] = Field(default=None, sa_column=Column(TEXT))
     created_at: Optional[str] = Field(default=None, sa_column=Column(TEXT))
+    cookie: Optional[str] = Field(default=None, sa_column=Column(TEXT))
     online: Optional[bool] = Field(default=None)
-    deja_connecte: Optional[bool] = Field(default=None)
+    

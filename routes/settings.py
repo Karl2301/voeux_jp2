@@ -15,6 +15,11 @@ def settings():
             else:
                 return redirect(url_for('login_get'))
 
+<<<<<<< HEAD:routes/settings.py
         
 
     return render_template('settings/settings.html')
+=======
+    else:
+        return redirect(url_for('login_get'))
+>>>>>>> ff0dfbf (update project):Sans titre/settings.py

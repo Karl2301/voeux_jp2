@@ -485,3 +485,64 @@ body.dark-mode .cardBox .card:hover .iconBx {
     left: initial;
   }
 }
+
+.card_settings {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .card_settings {
+  background: var(--black1);
+  color: var(--white);
+}
+
+.card_settings .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+body.dark .card_settings .numbers {
+  color: var(--white);
+}
+
+.card_settings .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+body.dark .card_settings .cardName {
+  color: var(--light-gray);
+}
+
+.card_settings .iconBx {
+  font-size: 3.5rem;
+  color: var(--black2);
+}
+
+body.dark .card_settings .iconBx {
+  color: var(--light-gray);
+}
+
+.card_settings:hover {
+  background: var(----light-grey);
+}
+
+body.dark .card_settings:hover {
+  background: var(--black);
+}
+
+.card_settings:hover .numbers,
+.card_settings:hover .cardName,
+.card_settings:hover .iconBx {
+  color: var(--white);
+}

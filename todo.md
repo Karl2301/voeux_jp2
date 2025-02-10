@@ -12,12 +12,12 @@ Cette application permet une gestion complète des élèves et des professeurs d
 
 ### 3. **Confirmation définitive des vœux**
    - Ajouter un bouton permettant à l'élève de confirmer définitivement ses vœux. 
-     - Lors de la confirmation, l'application doit demander à l'utilisateur s'il est vraiment sûr de valider ses choix.
-     - Une fois la confirmation effectuée, l'élève ne pourra plus modifier l'ordre des vœux. Il faudra prendre des mesures pour empêcher toute modification via le code JavaScript.
-     - Après confirmation, la valeur dédiée dans la base SQL passe à `True`, ce qui marque la validation définitive des choix.
+   - Lors de la confirmation, l'application doit demander à l'utilisateur s'il est vraiment sûr de valider ses choix.
+   - Une fois la confirmation effectuée, l'élève ne pourra plus modifier l'ordre des vœux. Il faudra prendre des mesures pour empêcher toute modification via le code JavaScript.
+   - Après confirmation, la valeur dédiée dans la base SQL passe à `True`, ce qui marque la validation définitive des choix.
      - Lors de la mise à jour des valeurs dans le fichier `/routes/update_data.py`, il est nécessaire de vérifier si la valeur dédiée dans la base SQL est bien à `False` avant d'apporter des modifications.
 
-### 4. **Page d'identifiants perdus**
+### 4. **Page d'identifiants perdus** ✅
    - Créer une page permettant aux utilisateurs de signaler la perte de leurs identifiants.
    - Lorsqu'un utilisateur demande un nouvel identifiant, une ligne est ajoutée dans le tableau `identifiants_perdus` de la base SQL, avec toutes les informations nécessaires (voir la classe dans le fichier `SQLClassSQL.py` pour plus de détails).
 

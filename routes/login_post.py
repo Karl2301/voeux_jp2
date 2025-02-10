@@ -19,20 +19,34 @@ def login_post():
 
     with Session(engine) as session:
         statement = select(Student).where(Student.identifiant_unique == identifiant)
-        user = session.exec(statement).one_or_none()
+        user_eleve = session.exec(statement).one_or_none()
+
+        statement = select(Professeurs).where(Professeurs.username == identifiant)
+        user_prof = session.exec(statement).one_or_none()
 
 
-        if user:
-            print(user)
+        if user_eleve:
+            print("eleve")
             cookie_value = str(uuid.uuid4())
 
-            user.cookie = cookie_value
-            session.add(user)
+            user_eleve.cookie = cookie_value
+            session.add(user_eleve)
             session.commit()
 
-            response = make_response(redirect(url_for('home')))
+            response = make_response(redirect(url_for('dashboard')))
             response.set_cookie('session_cookie', cookie_value)
             return response
+        
+        elif user_prof:
+            print("prof")
+            print(user_prof)
+            password=request.form.get('password')
+            username=request.form.get('identifiant_hidden')
+            if password != None:                    #si on recupere un mdp alors on verifie le login
+                if password == user_prof.password and username == user_prof.username :
+                    return redirect(url_for('login_get'))           #faut tester je n'ai pas accès
+            return redirect(url_for('login_get'))
+        
         else:
             flash('Identifiant non trouvé', 'error')
             return redirect(url_for('login_get'))
