@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login/main.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo_projet.png') }}">
+  <title>VoeuxSup</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <ul>
+        <li>
+          <div style="display: flex; align-items: center;">
+            <img class="logo" width="60px" height="60px" 
+                 src="{{ url_for('static', filename='img/logo_jp2.png') }}" 
+                 style="margin-right: 10px; filter: brightness(0) ;">
+            <h3 style="color: rgb(0, 0, 0);">Jean-Paul II</h3>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="hero">
+      <div class="text">
+        <p class="gray">Site tiers, ne communiquant pas à Parcoursup</p>
+        <h1>Définir un mot de passe<span class="blue">.</span></h1>
+      </div>
+      <div class="form">
+        <form id="login-form" class="centered-flex" action="/configure_password" method="post">
+          <!-- Champ Mot de passe -->
+          <div id="password-container">
+            <div class="input-icons">
+              <legend for="password">Mot de passe</legend>
+              <div class="icon-center">
+                <input class="input" type="password" id="password" name="password" placeholder="Mot de passe" required>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-key" viewBox="0 0 16 16">
+                  <path d="M3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/>
+                  <path d="M8.7 5.3a.5.5 0 0 1 0 .7L7.707 7H11a1 1 0 0 1 1 1v.293l1 1V8a2 2 0 0 0-2-2H7.707l1.293-1.293a.5.5 0 0 1 .707 0z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Champ Confirmer mot de passe -->
+          <div id="confirm-password-container">
+            <div class="input-icons">
+              <legend for="confirm-password">Confirmer mot de passe</legend>
+              <div class="icon-center">
+                <input class="input" type="password" id="confirm_password" name="confirm_password" placeholder="Confirmer mot de passe" required>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-key" viewBox="0 0 16 16">
+                  <path d="M3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/>
+                  <path d="M8.7 5.3a.5.5 0 0 1 0 .7L7.707 7H11a1 1 0 0 1 1 1v.293l1 1V8a2 2 0 0 0-2-2H7.707l1.293-1.293a.5.5 0 0 1 .707 0z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nouvel input pour sélectionner la classe avec toggle list -->
+          <div id="classe-container">
+            <div class="input-icons">
+              <legend for="classe">Classe</legend>
+              <div class="icon-center" style="position: relative;">
+                <input type="text" id="classe_toggle" name="classe" class="input toggle-input" placeholder="Choisissez votre classe" readonly required>
+                <div id="classe_options" class="dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10;">
+                  <div class="dropdown-item" onclick="selectClasse('TA')">TA</div>
+                  <div class="dropdown-item" onclick="selectClasse('TB')">TB</div>
+                  <div class="dropdown-item" onclick="selectClasse('TC')">TC</div>
+                  <div class="dropdown-item" onclick="selectClasse('TD')">TD</div>
+                  <div class="dropdown-item" onclick="selectClasse('TE')">TE</div>
+                  <div class="dropdown-item" onclick="selectClasse('TF')">TF</div>
+                  <div class="dropdown-item" onclick="selectClasse('TG')">TG</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button type="submit" class="btn blue-btn">Configurer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+      JP2
+    </div>
+  </div>
+
+  <script>
+    // Gestion du toggle list pour l'input "classe"
+    document.getElementById("classe_toggle").addEventListener("click", function(event) {
+      event.stopPropagation(); // Pour empêcher la propagation
+      let dropdown = document.getElementById("classe_options");
+      dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
+    });
+
+    function selectClasse(val) {
+      document.getElementById("classe_toggle").value = val;
+      document.getElementById("classe_options").style.display = "none";
+    }
+
+    // Ferme le dropdown si l'utilisateur clique ailleurs
+    document.addEventListener("click", function() {
+      var dropdown = document.getElementById("classe_options");
+      if(dropdown.style.display === "block"){
+        dropdown.style.display = "none";
+      }
+    });
+
+    // Script de notification (similaire aux autres pages)
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Empêche l'envoi immédiat du formulaire
+
+      // Affiche la notification
+      let notif = document.getElementById("notification");
+      notif.style.display = "block";
+
+      // Disparition automatique après 3 secondes puis soumission du formulaire
+      setTimeout(() => {
+        notif.style.display = "none";
+        event.target.submit();
+      }, 3000);
+    });
+  </script>
+
+<!-- Zone de notification -->
+<div id="notification" class="notification" style="display: none;">
+  ✅ Votre mot de passe a été configuré avec succès !
+</div>
+
+<script>
+  document.getElementById("login-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche l'envoi immédiat du formulaire
+
+    // Affiche la notification
+    let notif = document.getElementById("notification");
+    notif.style.display = "block";
+
+    // Disparition automatique après 3 secondes puis soumission du formulaire
+    setTimeout(() => {
+      notif.style.display = "none";
+      event.target.submit();
+    }, 3000);
+  });
+</script>
+</html>

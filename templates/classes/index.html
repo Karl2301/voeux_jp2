@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voeux JP2 - Classe {{ class_name }}</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <!-- ======= Styles ====== -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/style.css') }}">
+</head>
+
+<body>
+
+  <!-- =============== Navigation ================ -->
+  <div class="container">
+    <div class="navigation">
+      <ul>
+        <li>
+          <a href="#">
+            <span class="icon">
+              <img class="logo" width="60px" height="60px" src="{{ url_for('static', filename='img/logo_jp2.png') }}"
+                style="margin-right: 10px; filter: brightness(0) invert(1);">
+            </span>
+            <span class="title">Vœux Jean-Paul II</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard">
+            <span class="icon">
+              <ion-icon name="home-outline"></ion-icon>
+            </span>
+            <span class="title">Tableau de Bord</span>
+          </a>
+        </li>
+
+        <li id="eleves_nav" style="display: none;">
+          <a href="#">
+            <span class="icon">
+              <ion-icon name="people-outline"></ion-icon>
+            </span>
+            <span class="title">Élèves</span>
+          </a>
+        </li>
+
+        <li id="notification_nav" style="display: none;">
+          <a href="#">
+            <span class="icon">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+            </span>
+            <span class="title">Notifications</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/aide">
+            <span class="icon">
+              <ion-icon name="help-outline"></ion-icon>
+            </span>
+            <span class="title">Aide</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/settings">
+            <span class="icon">
+              <ion-icon name="settings-outline"></ion-icon>
+            </span>
+            <span class="title">Paramètres</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/logout">
+            <span class="icon">
+              <ion-icon name="log-out-outline"></ion-icon>
+            </span>
+            <span class="title">Déconnexion</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ========================= Principal ==================== -->
+    <div class="main">
+      <div class="topbar">
+        <div class="toggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+        <div class="search">
+          <label>
+            <input type="text" placeholder="Rechercher ici">
+            <ion-icon name="search-outline"></ion-icon>
+          </label>
+        </div>
+        <div class="user">
+            <span>{{ user_role }}</span>
+        </div>
+      </div>
+
+      <div class="cardBox">
+        <div class="card">
+          <div>
+            <div class="numbers">{{eleve_online_count}}</div>
+            <div class="cardName">Élèves Connectés</div>
+          </div>
+          <div class="iconBx">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="numbers">{{eleve_choix_validees_count}}</div>
+            <div class="cardName">Élèves ayant validé leurs vœux</div>
+          </div>
+          <div class="iconBx">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="card" id="siteStatusCard">
+          <div>
+            <div class="numbers" id="studentCount">30</div>
+            <div class="cardName">Nombre d'élèves</div>
+          </div>
+          <div class="iconBx">
+            <!-- Vous pouvez ajouter une icône ici -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================ Liste des Vœux des Élèves ================= -->
+      <div class="details">
+        <div class="recentOrders" id="recentOrdersContainer">
+          <div class="cardHeader">
+            <h2>Vœux de la classe {{ class_name }}</h2>
+          </div>
+          <p id="editModeMessage" style="display: none; color: red;">Vous êtes en mode édition. Vous pouvez modifier l'ordre des vœux.</p>
+          <table>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>Status</td>
+                <td>Vœux</td>
+                <td>Actions</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for eleve in eleves %}
+              <tr>
+                <td>{{ eleve.identifiant_unique }}</td>
+                <td>
+                  {% if eleve.online %}
+                    <span class="status delivered">EN LIGNE</span>
+                  {% else %}
+                    <span class="status offline">HORS LIGNE</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if eleve.choix_validees %}
+                    <span class="status delivered">VALIDÉS</span>
+                  {% else %}
+                    <span class="status offline">NON VALIDÉS</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <!-- Bouton d'action, par exemple pour accéder aux détails de l'élève -->
+                  <a href="/eleve/{{ eleve.identifiant_unique }}" class="btn">Voir</a>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="4" style="text-align: center;">Aucun élève trouvé dans cette classe.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========== Scripts =========  -->
+  <script src="{{ url_for('static', filename='js/classe_prof/main.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let studentCount = document.querySelector("tbody").rows.length;
+      document.getElementById("studentCount").textContent = studentCount;
+    });
+  </script>
+  <!-- ====== ionicons ======= -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

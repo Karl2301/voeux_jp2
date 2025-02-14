@@ -14,18 +14,15 @@ from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 def dashboard():
     session_cookie = request.cookies.get('session_cookie')
     if session_cookie:
         with Session(engine) as session:
-            statement = select(Student).where(Student.cookie == session_cookie)
-            user = session.exec(statement).first()
+            user = session.exec(select(Users).where(Users.cookie == session_cookie)).first()
             if user:
-                return render_template('dashboard/index.html')
-            else:
-                return redirect(url_for('login_get'))
-
-        
-
-    return render_template('dashboard/index.html')
+                user_role = "Professeur" if user.professeur else "Élève"
+                # Passez d'autres variables au template si nécessaire
+                return render_template('dashboard/index.html', user_role=user_role)
+    return redirect(url_for('login_get'))

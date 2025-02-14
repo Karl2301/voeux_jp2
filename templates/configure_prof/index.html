@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login/main.css') }}">
+  <title>Création de compte</title>
+  <style>
+    .btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn::after {
+      content: "➜";
+      font-size: 18px;
+      position: absolute;
+      right: -25px;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+      padding-right: 35px;
+    }
+
+    .btn:hover::after {
+      right: 10px;
+      opacity: 1;
+    }
+
+    .blue {
+      color: blue;
+    }
+
+    /* Style pour la notification fluide */
+    .notification {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <ul>
+        <li>
+          <a href="#">
+              <span class="icon">
+                  <img class="logo" width="60px" height="60px" src="{{ url_for('static', filename='img/logo_jp2.png') }}" style="margin-right: 10px; filter: brightness(0) invert(1);">
+              </span>
+              <span class="title">Vœux Jean-Paul II</span>
+          </a>
+      </li>
+      </ul>
+    </div>
+    <div class="hero">
+      <div class="text">
+        <h1>Création de compte<span class="blue">.</span></h1>
+        <p class="gray">Veuillez renseigner les informations ci-dessous pour créer votre compte.</p>
+      </div>
+      <div class="form">
+        <!-- Modification de l'action vers /configure_prof -->
+        <form id="register-form" class="centered-flex" action="/configure_prof" method="post">
+          <!-- Champ Nom -->
+          <div class="id" onclick="document.getElementById('nom').focus();">
+            <div class="input-icons">
+              <legend for="nom">Nom</legend>
+              <div class="icon-center">
+                <input class="input" type="text" id="nom" name="nom" placeholder="Nom" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Champ Prénom -->
+          <div class="id" onclick="document.getElementById('prenom').focus();">
+            <div class="input-icons">
+              <legend for="prenom">Prénom</legend>
+              <div class="icon-center">
+                <input class="input" type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+              </div>
+            </div>
+          </div>
+
+        
+
+          <!-- Champ Mot de passe -->
+          <div id="password-container">
+            <div class="input-icons">
+              <legend for="password">Mot de passe</legend>
+              <div class="icon-center">
+                <input class="input" type="password" id="password" name="password" placeholder="Mot de passe" required>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-key"
+                  viewBox="0 0 16 16">
+                  <path d="M3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" />
+                  <path d="M8.7 5.3a.5.5 0 0 1 0 .7L7.707 7H11a1 1 0 0 1 1 1v.293l1 1V8a2 2 0 0 0-2-2H7.707l1.293-1.293a.5.5 0 0 1 .707 0z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Champ Confirmer mot de passe -->
+          <div id="confirm-password-container">
+            <div class="input-icons">
+              <legend for="confirm-password">Confirmer mot de passe</legend>
+              <div class="icon-center">
+                <input class="input" type="password" id="confirm_password" name="confirm_password"
+                  placeholder="Confirmer mot de passe" required>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-key"
+                  viewBox="0 0 16 16">
+                  <path d="M3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z" />
+                  <path d="M8.7 5.3a.5.5 0 0 1 0 .7L7.707 7H11a1 1 0 0 1 1 1v.293l1 1V8a2 2 0 0 0-2-2H7.707l1.293-1.293a.5.5 0 0 1 .707 0z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button type="submit" class="btn">Créer mon compte</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="footer">JP2</div>
+  </div>
+
+  <!-- Notification -->
+  <div id="notification" class="notification">Votre compte a bien été créé !</div>
+
+</body>
+
+</html>

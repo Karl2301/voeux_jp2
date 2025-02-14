@@ -1,9 +1,6 @@
 // add hovered class to selected list item
 let list = document.querySelectorAll(".navigation li");
 
-const validateBtn = document.getElementById('validateBtn');
-
-
 function activeLink() {
   list.forEach((item) => {
     item.classList.remove("hovered");
@@ -50,52 +47,6 @@ function getUpdatedData() {
     return updatedData;
 }
 
-document.getElementById('modifyBtn').addEventListener('click', async function() {
-    var el = document.getElementById('sortable');
-    var modifyBtn = document.getElementById('modifyBtn');
-    var container = document.getElementById('recentOrdersContainer');
-    var editModeMessage = document.getElementById('editModeMessage');
-    
-    if (modifyBtn.textContent === "Modifier") {
-        modifyBtn.textContent = "Enregistrer";
-        modifyBtn.style.backgroundColor = "green";
-        container.classList.add('edit-mode');
-        editModeMessage.style.display = "block";
-        var sortable = Sortable.create(el, {
-            animation: 150,
-            ghostClass: 'blue-background-class',
-            onUpdate: function () {
-                updateRowNumbers();
-            }
-        });
-    } else {
-        modifyBtn.textContent = "Modifier";
-        modifyBtn.style.backgroundColor = "";
-        container.classList.remove('edit-mode');
-        editModeMessage.style.display = "none";
-        Sortable.get(el).destroy();
-
-        // Enregistrer les données mises à jour
-        const updatedData = getUpdatedData();
-        try {
-            const response = await fetch('/update_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedData)
-            });
-            const result = await response.json();
-            if (result.success) {
-                console.log('Données mises à jour avec succès');
-            } else {
-                console.error('Erreur lors de la mise à jour des données:', result.message);
-            }
-        } catch (error) {
-            console.error('Erreur lors de la requête de mise à jour:', error);
-        }
-    }
-});
 
 document.getElementById('siteStatusCard').addEventListener('click', function() {
   var statusElement = document.getElementById('siteStatus');
@@ -122,10 +73,6 @@ async function fetchVoeux() {
     let voeux = data.voeux_etablissements;
 
     if (data.professeur) {
-
-        validateBtn.style.display = "none";  // Cache le bouton immédiatement si validé
-
-        console.log("Professeurrr");
         // Affichage des éléments spécifiques au professeur
         const cards = document.querySelectorAll('.cardBox');
         cards.forEach(card => {
@@ -163,29 +110,20 @@ async function fetchVoeux() {
                     const card = document.createElement('div');
                     card.classList.add('cardBox'); 
                     card.innerHTML = `
-                    <a href="/classe/${classe}" class="card-link" style="text-decoration: none;">
-                        <div class="card">
-                            <div>
-                                <div class="numbers">${classe}</div>
-                                <div class="cardName">Classe</div>
+                        <a href="/classes/${classe}" class="card-link" style="text-decoration: none;">
+                            <div class="card">
+                                <div>
+                                    <div class="numbers">${classe}</div>
+                                    <div class="cardName">Classe</div>
+                                </div>
+                                <div class="iconBx">
+                                    <!-- inutile je pense -->
+                                </div>
                             </div>
-                            <div class="iconBx">
-                                <!-- inutile je pense -->
-                            </div>
-                        </div>
-                    </a>
-                `;
-                
+                        </a>
+                    `;
                     cardContainer.appendChild(card);
                 });
-
-                // Insérer le conteneur de cartes juste après la barre séparatrice (<hr class="barre-separatrice">)
-                const hr = document.querySelector('.barre-separatrice');
-                if (hr) {
-                    hr.insertAdjacentElement('afterend', cardContainer);
-                } else {
-                    console.error('La barre séparatrice n\'a pas été trouvée.');
-                }
             } else {
                 console.error('niveau_classe n\'est pas un tableau:', niveauClasseArray);
             }
@@ -194,7 +132,6 @@ async function fetchVoeux() {
         // Mise à jour des statistiques pour le professeur
         const elevesConnectes = document.getElementById('elevesConnectes');
         const elevesValideVoeux = document.getElementById('elevesValideVoeux');
-        const vosMessagesDemandes = document.getElementById('vosMessagesDemandes');
         const nombreClasses = document.getElementById('nombreClasses');
 
         if (elevesConnectes) {
@@ -202,9 +139,6 @@ async function fetchVoeux() {
         }
         if (elevesValideVoeux) {
             elevesValideVoeux.textContent = data.eleve_choix_validees;
-        }
-        if (vosMessagesDemandes) {
-            vosMessagesDemandes.textContent = data.identifiant_perdus;
         }
         if (nombreClasses) {
             nombreClasses.textContent = data.classes;
@@ -262,10 +196,6 @@ async function fetchVoeux() {
 document.addEventListener('DOMContentLoaded', function () {
     var protocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
     var socket = io.connect(protocol + document.domain + ':' + location.port);
-    const elevesConnectes = document.getElementById('elevesConnectes');
-    const elevesValideVoeux = document.getElementById('elevesValideVoeux');
-    const vosMessagesDemandes = document.getElementById('vosMessagesDemandes');
-    const nombreClasses = document.getElementById('nombreClasses');
 
     // Récupérer le cookie session_cookie
     const sessionCookie = document.cookie
@@ -275,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (sessionCookie) {
         // Envoyer le cookie au serveur après connexion
-        console.log('Envoi du cookie session_cookie au serveur WebSocket');
         socket.emit('join', { session_cookie: sessionCookie });
     } else {
         console.warn("Aucun cookie 'session_cookie' trouvé");
@@ -284,25 +213,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Écouter les messages du serveur
     socket.on('message', function (data) {
         console.log('Message reçu:', data);
-        if (data.total_online_students !== undefined) {
-            console.log('Mise à jour du nombre d\'élèves connectés:', data.total_online_students);
-            if (elevesConnectes) {
-                elevesConnectes.textContent = data.total_online_students;
-            } else {
-                console.error('Élément avec l\'ID "elevesConnectes" non trouvé');
-            }
-        }
     });
 
     // Détecter la déconnexion
-    socket.on('disconnect', function () {
-        console.log('Déconnecté du serveur WebSocket');
-    });
-
-    // Optionnel : Détecter la fermeture de la fenêtre/navigateur
     window.addEventListener('beforeunload', function () {
-        console.log('Fermeture de la fenêtre détectée, déconnexion...');
-        socket.disconnect();
+        socket.emit('disconnect_user', { session_cookie: sessionCookie });
     });
 });
 
@@ -340,51 +255,3 @@ document.addEventListener("DOMContentLoaded", function () {
 window.onload = async function() {
     await fetchVoeux();
 }
-
-
-document.addEventListener("DOMContentLoaded", async function() {
-    const modifyBtn = document.getElementById('modifyBtn');
-
-    // Vérifier si les vœux sont validés depuis la base de données
-    try {
-        const response = await fetch('/get_voeux_status', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        const data = await response.json();
-        console.log('Statut des vœux:', data);
-        if (data.choix_validees) {
-            modifyBtn.style.display = "none";  // Cache le bouton immédiatement si validé
-            validateBtn.style.pointerEvents = "none"; // Désactive le bouton "Valider"
-            validateBtn.style.opacity = "0.6"; // Rend le bouton "Valider" visuellement désactivé
-        }
-    } catch (error) {
-        console.error("Erreur lors de la récupération du statut des vœux :", error);
-    }
-
-});
-
-validateBtn.addEventListener('click', async function() {
-    try {
-        const response = await fetch('/validate_voeux', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ validate: true })
-        });
-
-        const data = await response.json();
-        if (data.success) {
-            alert('Vos vœux ont été validés avec succès.');
-            validateBtn.style.pointerEvents = "none"; // Désactive le bouton "Valider"
-            validateBtn.style.opacity = "0.6"; // Rend le bouton "Valider" visuellement désactivé
-            modifyBtn.style.display = "none"; // Cache le bouton "Modifier"
-        } else {
-            console.error('Erreur lors de la validation des vœux:', data.message);
-        }
-    } catch (error) {
-        console.error('Erreur lors de la requête de validation:', error);
-    }
-});

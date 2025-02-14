@@ -223,3 +223,46 @@ legend {
     margin: 1em auto;
   }
 }
+
+.toggle-input {
+  cursor: pointer;
+  background-color: #f0f0f0; /* fond gris clair pour l'input */
+  color: #333;             /* texte en gris foncé */
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.dropdown-menu {
+  background: #f8f8f8;      /* léger fond gris pour contraster */
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0;
+}
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4caf50;
+  color: #fff;
+  padding: 1em 2em;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 1000;
+  font-size: 1rem;
+  text-align: center;
+}

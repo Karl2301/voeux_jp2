@@ -47,7 +47,6 @@
         .blue {
             color: blue;
         }
-        
         /* Style pour la notification fluide */
         .notification {
             display: none;
@@ -90,9 +89,9 @@
         </div>
         <div class="hero">
             <div class="text">
-                <h1>Identifiant Perdu<span class="blue">.</span></h1>
-                <p class="gray">Vous avez perdu votre <span class="blue">identifiant</span> ?</p>
-                <p class="gray">Ne vous faîtes aucun <span class="blue">souci</span>, nous allons nous occuper de cela.</p>
+                <h1>Identifiant Perdu<font color="blue">.</font></h1>
+                    <p class="gray">Vous avez perdu votre <font color="blue">identifiant</font> ?</p>
+                    <p class="gray">Ne vous faîtes aucun <font color="blue">souci</font>, nous allons nous occuper de cela.</p>
             </div>
             <div class="form">
                 <form id="login-form" class="centered-flex" action="/lost_id" method="post">
@@ -143,27 +142,24 @@
     </div>
 
     <!-- Notification -->
-    <div id="notification" class="notification">✅ Votre demande a bien été envoyée ! Un professeur vous contactera bientôt.</div>
+    <div id="notification" class="notification" style="display: none;">
+        ✅ Votre demande a bien été envoyée ! Un professeur vous contactera bientôt.
+    </div>
 
     <script>
         document.getElementById("login-form").addEventListener("submit", function(event) {
             event.preventDefault(); // Empêche l'envoi immédiat du formulaire
-
+    
             // Affiche la notification fluide
             let notif = document.getElementById("notification");
             notif.style.display = "block";
-
-            // Disparition automatique après 3 secondes
-            setTimeout(function() {
-                notif.style.display = "none";
-            }, 5000);
-
-            // Optionnel : Soumettre le formulaire après la notification
+    
+            // Disparition automatique après 3 secondes puis soumission du formulaire
             setTimeout(() => {
+                notif.style.display = "none";
                 event.target.submit();
-            }, 1000);
+            }, 3000);
         });
     </script>
 </body>
-
 </html>

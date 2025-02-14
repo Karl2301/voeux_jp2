@@ -5,6 +5,8 @@ from sqlmodel import Session, select
 import json
 import uuid
 import datetime
+from flask_socketio import SocketIO, emit, join_room, leave_room
+
 
 def lost_id_get():
     return render_template('lost_id/index.html')
@@ -16,7 +18,7 @@ def lost_id_post():
     classe_user = request.form.get('classe')
 
     with Session(engine) as session:
-        new_user = IdentifiantPerdue(
+        new_user = IdentifiantPerdus(
             nom=nom_user,
             prenom=prenom_user,
             classe=classe_user,

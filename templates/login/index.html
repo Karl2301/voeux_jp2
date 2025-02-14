@@ -39,26 +39,23 @@
               <legend for="identifiant">Identifiant</legend>
               <div class="icon-center">
                 <input class="input" type="text" id="identifiant" name="identifiant" placeholder="Identifiant" required>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-person-lines-fill" style="color: black" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="dark" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                   <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
                 </svg>
               </div>
             </div>
           </div>
 
-          <!-- Champ caché pour recup la valeur de l'identifiant meme sans que l'user le rentrer une deuxieme fois -->
-          <input type="hidden" name="identifiant_hidden" id="identifiant-hidden">
-
-          <!-- Champ Mot de passe (caché par défaut) -->
-          <div id="password-container" style="display: none;">
+          <!-- Champ Mot de passe -->
+          <div id="password-container">
             <div class="input-icons">
               <legend for="password">Mot de passe</legend>
               <div class="icon-center">
-                <input class="input" type="password" id="password" name="mdp" placeholder="Mot de passe">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-lock-fill" viewBox="0 0 16 16">
-                  <path d="M8 1a3 3 0 0 0-3 3v3H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-2V4a3 3 0 0 0-3-3z"/>
+                <input class="input" type="password" id="password" name="password" placeholder="Mot de passe" required>
+                <!-- Nouvelle icône de clé -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-key" viewBox="0 0 16 16">
+                  <path d="M3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/>
+                  <path d="M8.7 5.3a.5.5 0 0 1 0 .7L7.707 7H11a1 1 0 0 1 1 1v.293l1 1V8a2 2 0 0 0-2-2H7.707l1.293-1.293a.5.5 0 0 1 .707 0z"/>
                 </svg>
               </div>
             </div>
@@ -75,8 +72,8 @@
     </div>
   </div>
 
-  <!-- Inclusion du fichier JavaScript externe -->
-  <script src="static/js/login/login.js"></script>
+  <!-- Inclusion du fichier JavaScript externe ( étant donné que maintenat tout les comptes on un champ mdp plus besoin de le caché avec js a mon avis :)-->
+  
 </body>
 
 </html>

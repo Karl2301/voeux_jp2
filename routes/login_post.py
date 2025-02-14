@@ -12,42 +12,53 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
 import uuid
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 def login_post():
-    
+    """
+    data = request.get_json()  # Récupérer le contenu du POST en JSON
+    identifiant = data.get('identifiant')
+    """
+
+    session_cookie = request.cookies.get('session_cookie')
+
     identifiant = request.form['identifiant']
+    password = request.form['password']
 
-    with Session(engine) as session:
-        statement = select(Student).where(Student.identifiant_unique == identifiant)
-        user_eleve = session.exec(statement).one_or_none()
+    with Session(engine) as sessionuser:
+        user = sessionuser.exec(
+            select(Users).where(Users.identifiant_unique == identifiant)
+        ).one_or_none()
 
-        statement = select(Professeurs).where(Professeurs.username == identifiant)
-        user_prof = session.exec(statement).one_or_none()
+            
 
+        if user and user.password == password:
+            
+            
+            new_session_cookie = str(uuid.uuid4())
 
-        if user_eleve:
-            print("eleve")
-            cookie_value = str(uuid.uuid4())
-
-            user_eleve.cookie = cookie_value
-            session.add(user_eleve)
-            session.commit()
-
-            response = make_response(redirect(url_for('dashboard')))
-            response.set_cookie('session_cookie', cookie_value)
+            session['user_id'] = user.identifiant_unique
+            user.cookie = new_session_cookie
+            user.online = True  # Mettre l'utilisateur en ligne
+            
+            sessionuser.add(user)
+            sessionuser.commit()
+            print("classe: ", user.niveau_classe)
+            
+            
+            # Informations de la réponse (res)
+            
+            if user.professeur == True and user.password == "ProfMDP"  : # Si l'utilisateur est un professeur et n'a pas encore configuré son mot de passe
+                response = make_response(redirect(url_for('configure_prof_get')))
+            elif user.password == "EleveMDP": # Si l'utilisateur est un élève et n'a pas encore configuré son mot de passe
+                response = make_response(redirect(url_for('configure_password_get')))
+            else:
+                response = make_response(redirect(url_for('dashboard')))
+            response.set_cookie('session_cookie', new_session_cookie)
             return response
-        
-        elif user_prof:
-            print("prof")
-            print(user_prof)
-            password=request.form.get('password')
-            username=request.form.get('identifiant_hidden')
-            if password != None:                    #si on recupere un mdp alors on verifie le login
-                if password == user_prof.password and username == user_prof.username :
-                    return redirect(url_for('login_get'))           #faut tester je n'ai pas accès
-            return redirect(url_for('login_get'))
-        
         else:
-            flash('Identifiant non trouvé', 'error')
-            return redirect(url_for('login_get'))
-        
+            error_message = "Nom d'utilisateur ou mot de passe incorrect."
+            return render_template('login/index.html', error=error_message)
+
+
+# EleveMDP

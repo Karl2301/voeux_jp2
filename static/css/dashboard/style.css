@@ -9,24 +9,47 @@
   box-sizing: border-box;
 }
 
+
+.notification {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #007bff, #00aaff);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+    animation: fadeIn 0.5s ease-in-out, slideIn 0.7s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
 :root {
   --blue: #2a2185;
+  --dark-blue: #1a1a5e;
   --white: #fff;
   --gray: #f5f5f5;
   --black1: #222;
   --black2: #999;
+  --dark-gray: #2e2e2e;
+  --light-gray: #d3d3d3;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
+  background: var(--white);
+  transition: background 0.3s ease;
 }
 
-.container {
-  position: relative;
-  width: 100%;
+/* Mode sombre */
+body.dark {
+  background: var(--dark-gray);
+  color: white;
 }
-
 /* =============== Navigation ================ */
 .navigation {
   position: fixed;
@@ -37,6 +60,7 @@ body {
   transition: 0.5s;
   overflow: hidden;
 }
+
 .navigation.active {
   width: 80px;
 }
@@ -60,6 +84,10 @@ body {
 .navigation ul li.hovered {
   background-color: var(--white);
 }
+body.dark .navigation ul li:hover,
+body.dark .navigation ul li.hovered {
+  background-color: var(--dark-gray);
+}
 
 .navigation ul li:nth-child(1) {
   margin-bottom: 40px;
@@ -68,15 +96,65 @@ body {
 
 .navigation ul li a {
   position: relative;
-  display: block;
   width: 100%;
   display: flex;
   text-decoration: none;
   color: var(--white);
 }
+
 .navigation ul li:hover a,
 .navigation ul li.hovered a {
-  color: var(--blue);
+  color: var(--black1);
+}
+body.dark .navigation ul li:hover a,
+body.dark .navigation ul li.hovered a {
+  color: var(--white);
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+}
+body.dark .navigation ul li:hover a::before,
+body.dark .navigation ul li.hovered a::before {
+  box-shadow: 35px 35px 0 10px var(--dark-gray);
+}
+
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+}
+body.dark .navigation ul li:hover a::after,
+body.dark .navigation ul li.hovered a::after {
+  box-shadow: 35px -35px 0 10px var(--dark-gray);
+}
+
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--black1);
+}
+body.dark .navigation ul li:hover a,
+body.dark .navigation ul li.hovered a {
+  color: var(--white);
 }
 
 .navigation ul li a .icon {
@@ -100,6 +178,146 @@ body {
   text-align: start;
   white-space: nowrap;
 }
+body.dark .navigation {
+  background: var(--blue);
+}
+
+/* ===================== Main ===================== */
+.main {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  background: var(--white);
+  transition: 0.5s;
+  color: var(--black1);
+}
+body.dark .main {
+  background: var(--dark-gray);
+  color: var(--white);
+}
+
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--white);
+  transition: background 0.5s ease;
+}
+body.dark .topbar {
+  background: #1a1a1a;
+}
+
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2a2185;
+  --dark-blue: #1a1a5e;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+  --dark-gray: #2e2e2e;
+  --light-gray: #d3d3d3;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--white);
+  transition: background 0.3s ease;
+}
+
+/* Mode sombre */
+body.dark {
+  background: var(--dark-gray);
+  color: white;
+}
+
+/* =============== Navigation ================ */
+.navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: width 0.5s;
+  overflow: hidden;
+}
+
+.navigation.active {
+  width: 80px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+}
+body.dark .navigation ul li:hover,
+body.dark .navigation ul li.hovered {
+  background-color: var(--dark-gray);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--black1);
+}
+body.dark .navigation ul li:hover a,
+body.dark .navigation ul li.hovered a {
+  color: var(--white);
+}
 
 /* --------- curve outside ---------- */
 .navigation ul li:hover a::before,
@@ -115,6 +333,11 @@ body {
   box-shadow: 35px 35px 0 10px var(--white);
   pointer-events: none;
 }
+body.dark .navigation ul li:hover a::before,
+body.dark .navigation ul li.hovered a::before {
+  box-shadow: 35px 35px 0 10px var(--dark-gray);
+}
+
 .navigation ul li:hover a::after,
 .navigation ul li.hovered a::after {
   content: "";
@@ -128,6 +351,35 @@ body {
   box-shadow: 35px -35px 0 10px var(--white);
   pointer-events: none;
 }
+body.dark .navigation ul li:hover a::after,
+body.dark .navigation ul li.hovered a::after {
+  box-shadow: 35px -35px 0 10px var(--dark-gray);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .icon ion-icon {
+  font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+body.dark .navigation {
+  background: var(--blue);
+}
 
 /* ===================== Main ===================== */
 .main {
@@ -136,8 +388,14 @@ body {
   left: 300px;
   min-height: 100vh;
   background: var(--white);
-  transition: 0.5s;
+  transition: width 0.5s, left 0.5s;
+  color: var(--black1);
 }
+body.dark .main {
+  background: var(--dark-gray);
+  color: var(--white);
+}
+
 .main.active {
   width: calc(100% - 80px);
   left: 80px;
@@ -150,23 +408,18 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+  background: var(--white);
+  transition: background 0.5s ease;
+}
+body.dark .topbar {
+  background: #1a1a1a;
 }
 
-.toggle {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  cursor: pointer;
-}
-
-.search {
-  position: relative;
-  width: 400px;
-  margin: 0 10px;
+.search label ion-icon {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
 }
 
 .search label {
@@ -190,90 +443,70 @@ body {
   top: 0;
   left: 10px;
   font-size: 1.2rem;
+  color: var(--white);
 }
 
-.user {
+body.dark .search label ion-icon {
+  color: var(--white);
+}
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+/* Mode sombre : amélioration du switch */
+body.dark .checkbox-label {
+  background-color: #555;  /* Rendre le fond du switch plus clair en mode sombre */
+}
+
+body.dark .checkbox-label .ball {
+  background-color: #fff;  /* Rendre la boule blanche pour plus de visibilité */
+}
+
+.checkbox-label {
+  background-color: #111;
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
   position: relative;
-}
-
-.recentOrders.edit-mode {
-  border: 2px dashed red; /* Example style for edit mode */
-}
-
-.logo {
-  filter: invert(100%) brightness(3000%);
-}
-
-/* ======================= Cards ====================== */
-.cardBox {
-  position: relative;
-  width: 100%;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 30px;
-}
-
-.cardBox .card {
-  position: relative;
-  background: var(--white);
-  padding: 30px;
-  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
-  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-  transition: background 0.3s, color 0.3s;
+  align-items: center;
 }
 
-.cardBox .card .numbers {
-  position: relative;
-  font-weight: 500;
-  font-size: 2.5rem;
-  color: var(--blue);
+/* ✅ Correction du switch en mode sombre */
+body.dark .checkbox-label {
+  background-color: #555; /* Un gris plus clair pour mieux voir le switch */
 }
 
-.cardBox .card .cardName {
-  color: var(--black2);
-  font-size: 1.1rem;
-  margin-top: 5px;
+body.dark .checkbox-label .ball {
+  background-color: white; /* Assurer que la boule du switch reste visible */
 }
 
-.cardBox .card .iconBx {
-  font-size: 3.5rem;
-  color: var(--black2);
+.fa-moon {
+  color: #f1c40f;
 }
 
-.cardBox .card:hover {
-  background: var(--blue);
-}
-.cardBox .card:hover .numbers,
-.cardBox .card:hover .cardName,
-.cardBox .card:hover .iconBx {
-  color: var(--white);
+.fa-sun {
+  color: #f39c12;
 }
 
-/* Dark mode styles */
-body.dark-mode .cardBox .card {
-  background: var(--black1);
-  color: var(--white);
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
 }
-body.dark-mode .cardBox .card .numbers {
-  color: var(--white);
-}
-body.dark-mode .cardBox .card .cardName {
-  color: var(--gray);
-}
-body.dark-mode .cardBox .card .iconBx {
-  color: var(--gray);
-}
-body.dark-mode .cardBox .card:hover {
-  background: var(--gray);
-}
-body.dark-mode .cardBox .card:hover .numbers,
-body.dark-mode .cardBox .card:hover .cardName,
-body.dark-mode .cardBox .card:hover .iconBx {
-  color: var(--black1);
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
 }
 
 /* ================== Order Details List ============== */
@@ -296,6 +529,10 @@ body.dark-mode .cardBox .card:hover .iconBx {
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
   border-radius: 20px;
 }
+body.dark .details .recentOrders {
+  background: var(--dark-gray);
+  color: var(--white);
+}
 
 .details .cardHeader {
   display: flex;
@@ -306,10 +543,13 @@ body.dark-mode .cardBox .card:hover .iconBx {
   font-weight: 600;
   color: var(--blue);
 }
+body.dark .cardHeader h2 {
+  color: #4169E1;
+}
 .cardHeader .btn {
   position: relative;
   padding: 5px 10px;
-  background: var(--blue);
+  background-color: #4169E1;
   text-decoration: none;
   color: var(--white);
   border-radius: 6px;
@@ -326,6 +566,10 @@ body.dark-mode .cardBox .card:hover .iconBx {
 .details .recentOrders table tr {
   color: var(--black1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+body.dark .details .recentOrders table tr {
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .details .recentOrders table tr:last-child {
   border-bottom: none;
@@ -346,6 +590,492 @@ body.dark-mode .cardBox .card:hover .iconBx {
 .details .recentOrders table tr td:nth-child(3) {
   text-align: center;
 }
+
+.status.delivered {
+  display: inline-block;
+  padding: 2px 4px;
+  background: #8de02c;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.offline {
+  padding: 2px 4px;
+  background: #ff0000;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status.pending {
+  padding: 2px 4px;
+  background: #e9b10a;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.return {
+  padding: 2px 4px;
+  background: #f00;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.status.inProgress {
+  padding: 2px 4px;
+  background: #1795ce;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.recentCustomers {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  padding: 20px;
+  background: var(--white);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.recentCustomers .imgBx {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+.recentCustomers .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recentCustomers table tr td {
+  padding: 12px 10px;
+}
+.recentCustomers table tr td h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2rem;
+}
+.recentCustomers table tr td h4 span {
+  font-size: 14px;
+  color: var(--black2);
+}
+.recentCustomers table tr:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+.recentCustomers table tr:hover td h4 span {
+  color: var(--white);
+}
+
+/* ====================== Responsive Design ========================== */
+@media (max-width: 991px) {
+  .navigation {
+    left: -300px;
+  }
+  .navigation.active {
+    width: 300px;
+    left: 0;
+  }
+  .main {
+    width: 100%;
+    left: 0;
+  }
+  .main.active {
+    left: 300px;
+  }
+  .cardBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  .recentOrders {
+    overflow-x: auto;
+  }
+  .status.inProgress {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardBox {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cardHeader h2 {
+    font-size: 20px;
+  }
+
+  .user {
+    min-width: 40px;
+  }
+  .navigation {
+    width: 100%;
+    left: -100%;
+    z-index: 1000;
+  }
+  .navigation.active {
+    width: 100%;
+    left: 0;
+  }
+  .toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.5rem;
+    color: var(--black1);
+    cursor: pointer;
+    z-index: 10001;
+    transition: color 0.3s ease;
+  }
+  .main.active .toggle {
+    color: #fff;
+    position: fixed;
+    right: 0;
+    left: initial;
+  }
+}
+
+/* ======================= Cards ====================== */
+.cardBox {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.cardBox .card {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .cardBox .card {
+  background: var(--dark-gray);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.3);
+  color: var(--white);
+}
+
+.cardBox .card .numbers {
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+body.dark .cardBox .card .numbers {
+  color: var(--white);
+}
+
+.cardBox .card .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+body.dark .cardBox .card .cardName {
+  color: var(--light-gray);
+}
+
+.cardBox .card .iconBx {
+  font-size: 3.5rem;
+  color: var(--white);
+}
+
+body.dark .cardBox .card .iconBx {
+  color: var(--white);
+}
+
+.cardBox .card:hover {
+  background: var(--light-gray);
+}
+
+body.dark .cardBox .card:hover {
+  background: #1a1a1a; /* Slightly darker color for dark mode hover */
+  transition: background 0.3s ease;
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: var(--white);
+}
+
+.card_settings {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .card_settings {
+  background: var(--dark-gray);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.3);
+  color: var(--white);
+}
+
+.card_settings .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+body.dark .card_settings .numbers {
+  color: var(--white);
+}
+
+.card_settings .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+body.dark .card_settings .cardName {
+  color: var(--light-gray);
+}
+
+.card_settings .iconBx {
+  font-size: 3.5rem;
+  color: var(--white);
+}
+
+body.dark .card_settings .iconBx {
+  color: var(--white);
+}
+
+/* Correction de l'erreur de variable (----light-grey → --light-gray) */
+.card_settings:hover {
+  background: var(--light-gray);
+}
+
+body.dark .card_settings:hover {
+  background: #1a1a1a; /* Slightly darker color for dark mode hover */
+  transition: background 0.3s ease;
+}
+
+.card_settings:hover .numbers,
+.card_settings:hover .cardName,
+.card_settings:hover .iconBx {
+  color: var(--white);
+}
+
+.barre-separatrice {
+  width: 80%;
+  border: none;
+  border-top: 2px solid rgb(0, 0, 0);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.dark .barre-separatrice {
+  border-top: 2px solid rgb(255, 255, 255);
+}
+.search label ion-icon {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+}
+
+.search label input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 5px 20px;
+  padding-left: 35px;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid var(--black2);
+}
+
+.search label ion-icon {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
+  color: var(--white);
+}
+
+body.dark .search label ion-icon {
+  color: var(--white);
+}
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+/* Mode sombre : amélioration du switch */
+body.dark .checkbox-label {
+  background-color: #555;  /* Rendre le fond du switch plus clair en mode sombre */
+}
+
+body.dark .checkbox-label .ball {
+  background-color: #fff;  /* Rendre la boule blanche pour plus de visibilité */
+}
+
+
+.checkbox-label {
+  background-color: #111;
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ✅ Correction du switch en mode sombre */
+body.dark .checkbox-label {
+  background-color: #555; /* Un gris plus clair pour mieux voir le switch */
+}
+
+body.dark .checkbox-label .ball {
+  background-color: white; /* Assurer que la boule du switch reste visible */
+}
+
+
+.fa-moon {
+  color: #f1c40f;
+}
+
+.fa-sun {
+  color: #f39c12;
+}
+
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
+}
+
+
+/* ================== Order Details List ============== */
+.details {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 30px;
+  /* margin-top: 10px; */
+}
+
+.details .recentOrders {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+body.dark .details .recentOrders {
+  background: var(--dark-gray);
+  color: var(--white);
+}
+
+.details .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cardHeader h2 {
+  font-weight: 600;
+  color: var(--blue);
+}
+body.dark .cardHeader h2 {
+  color: #4169E1;
+}
+.cardHeader .btn {
+  position: relative;
+  padding: 5px 10px;
+  background-color: #4169E1;
+  text-decoration: none;
+  color: var(--white);
+  border-radius: 6px;
+}
+
+.details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details table thead td {
+  font-weight: 600;
+}
+.details .recentOrders table tr {
+  color: var(--black1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+body.dark .details .recentOrders table tr {
+  color: var(--white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.details .recentOrders table tr:last-child {
+  border-bottom: none;
+}
+.details .recentOrders table tbody tr:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+.details .recentOrders table tr td {
+  padding: 10px;
+}
+.details .recentOrders table tr td:last-child {
+  text-align: end;
+}
+.details .recentOrders table tr td:nth-child(2) {
+  text-align: end;
+}
+.details .recentOrders table tr td:nth-child(3) {
+  text-align: center;
+}
+
 .status.delivered {
   padding: 2px 4px;
   background: #8de02c;
@@ -463,6 +1193,7 @@ body.dark-mode .cardBox .card:hover .iconBx {
   .cardHeader h2 {
     font-size: 20px;
   }
+
   .user {
     min-width: 40px;
   }
@@ -476,7 +1207,14 @@ body.dark-mode .cardBox .card:hover .iconBx {
     left: 0;
   }
   .toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.5rem;
+    color: var(--black1);
+    cursor: pointer;
     z-index: 10001;
+    transition: color 0.3s ease;
   }
   .main.active .toggle {
     color: #fff;
@@ -484,4 +1222,247 @@ body.dark-mode .cardBox .card:hover .iconBx {
     right: 0;
     left: initial;
   }
+}
+
+
+/* ======================= Cards ====================== */
+.cardBox {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* Centre les cartes horizontalement */
+  align-items: center; /* Centre les cartes verticalement */
+  flex-wrap: wrap; /* Permet aux cartes de passer à la ligne suivante si nécessaire */
+  gap: 30px; /* Ajoute un espace entre les cartes */
+}
+
+.cardBox .card {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  flex: 0 1 auto; /* Permet aux cartes de garder leur taille initiale */
+  margin: 10px; /* Ajoute un espace autour de chaque carte */
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+.cardBox .card .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+  font-size: 3.5rem;
+  color: var(--white);
+}
+
+.cardBox .card:hover {
+  background: var(--blue);
+}
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: var(--white);
+}
+
+.card_settings {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .card_settings {
+  background: var(--black1);
+  color: var(--white);
+}
+
+.card_settings .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+body.dark .card_settings .numbers {
+  color: var(--white);
+}
+
+.card_settings .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+body.dark .card_settings .cardName {
+  color: var(--light-gray);
+}
+
+.card_settings .iconBx {
+  font-size: 3.5rem;
+  color: var(--white);
+}
+
+body.dark .card_settings .iconBx {
+  color: var(--white);
+}
+
+.card_settings:hover {
+  background: var(----light-grey);
+}
+
+body.dark .card_settings:hover {
+  background: var(--black);
+}
+
+.card_settings:hover .numbers,
+.card_settings:hover .cardName,
+.card_settings:hover .iconBx {
+  color: var(--white);
+}
+
+.barre-separatrice {
+  width: 80%;
+  border: none;
+  border-top: 2px solid rgb(34, 65, 158);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cardContainer {
+  display: flex;
+  gap: 1rem;           /* Espace entre les cartes */
+  flex-wrap: wrap;     /* Permet aux cartes de passer à la ligne si nécessaire */
+  justify-content: center; /* Centrer les cartes horizontalement */
+  
+}
+
+
+.cardContainer .cardBox {
+  width: 200px;       /* ou une autre largeur fixe souhaitée */
+  display: block;     /* ou flex si vous avez besoin d’un alignement interne */
+  /* Supprimez grid-template-columns et grid-gap si inutile */
+  padding: 20px;      /* éventuellement ajuster la marge intérieure */
+}
+
+/* ================================================ */
+/* Profil Élève - Display as Cards                 */
+/* ================================================ */
+.profile-container {
+  padding: 20px;
+  background: var(--white);
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+}
+
+.profile-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 cards par ligne */
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.profile-cards .card {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+  min-height: 250px; /* Augmente la hauteur de la carte */
+  display: flex; /* Active l'affichage flex */
+  flex-direction: column; /* Aligne les éléments en colonne */
+  justify-content: center; /* Centre verticalement les contenus */
+  align-items: center; /* Centre horizontalement les contenus */
+}
+
+.profile-cards .card:hover {
+  transform: translateY(-5px);
+  background: #2a2185; /* Couleur violette au survol */
+  color: var(--white);
+}
+
+.profile-cards .card h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem; /* Augmente la taille du titre */
+}
+
+.profile-cards .card p {
+  margin: 0;
+  font-size: 1.2rem; /* Augmente la taille du texte */
+}
+
+.status.delivered {
+  color: green;
+  font-weight: bold;
+}
+
+.status.offline {
+  padding: 2px 4px;
+  background: #ff0000; /* Fond rouge pour le statut hors ligne */
+  color: var(--white); /* Texte en blanc pour une bonne lisibilité */
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+}
+
+/* Bouton violet */
+.btn-violet {
+  background-color: #2a2185;
+  color: #fff;
+  border: none;
+}
+
+.btn-violet:hover {
+  background-color: #2a2185;
+  transform: translateY(-3px);
+}
+
+/* ---------- Mode sombre pour le profil élève ---------- */
+body.dark .profile-container {
+  background: var(--dark-gray);
+  color: var(--white);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .profile-cards .card {
+  background: var(--dark-gray);
+  color: var(--white);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .profile-cards .card:hover {
+  transform: translateY(-5px);
+  background: #1a1a1a; /* Couleur de survol en mode sombre */
+  color: var(--white);
 }

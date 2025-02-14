@@ -3,6 +3,8 @@ from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
+from flask_socketio import SocketIO, emit, join_room, leave_room
+
 
 
 def update_theme():
@@ -11,7 +13,7 @@ def update_theme():
     darkTheme = data.get('darkTheme')
     if session_cookie:
         with Session(engine) as session:
-            statement = select(Student).where(Student.cookie == session_cookie)
+            statement = select(Users).where(Users.cookie == session_cookie)
             user = session.exec(statement).one_or_none()
             if user:
                 user.dashboard_theme = darkTheme
@@ -28,7 +30,7 @@ def get_theme():
     session_cookie = request.cookies.get('session_cookie')
     if session_cookie:
         with Session(engine) as session:
-            statement = select(Student).where(Student.cookie == session_cookie)
+            statement = select(Users).where(Users.cookie == session_cookie)
             user = session.exec(statement).one_or_none()
             if user:
                 return jsonify({'darkTheme': user.dashboard_theme})

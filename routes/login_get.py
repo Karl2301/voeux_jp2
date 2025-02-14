@@ -14,6 +14,7 @@ from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 def login_get():
     session_cookie = request.cookies.get('session_cookie')
@@ -21,7 +22,7 @@ def login_get():
 
     if session_cookie:
         with Session(engine) as session:
-            statement = select(Student).where(Student.cookie == session_cookie)
+            statement = select(Users).where(Users.cookie == session_cookie)
             user = session.exec(statement).first()
             if user:
                 return redirect(url_for('dashboard'))

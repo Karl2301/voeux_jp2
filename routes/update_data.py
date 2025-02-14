@@ -15,6 +15,7 @@ from ext_config import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlmodel import Session, select
 import json
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 
 
@@ -22,7 +23,7 @@ def update_data():
     session_cookie = request.cookies.get('session_cookie')
     if session_cookie:
         with Session(engine) as session:
-            statement = select(Student).where(Student.cookie == session_cookie)
+            statement = select(Users).where(Users.cookie == session_cookie)
             user = session.exec(statement).first()
             if user:
                 try:

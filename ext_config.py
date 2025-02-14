@@ -4,14 +4,15 @@ from typing import Optional
 import pandas as pd
 import os
 from SQLClassSQL import *
-
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
+socketio = SocketIO(app)
 
 # Configuration de la base de données MariaDB
-# DATABASE_URL = "mysql+pymysql://nsidb:123nsi!bd@localhost/jp2_voeux_parcoursup"
-DATABASE_URL = "sqlite:///database.sqlite3"
+DATABASE_URL = "mysql+pymysql://nsidb:123nsi!bd@localhost/jp2_voeux_parcoursup"
+# DATABASE_URL = "sqlite:///database.sqlite3"
 engine = create_engine(DATABASE_URL)
 
 SQLModel.metadata.create_all(engine)

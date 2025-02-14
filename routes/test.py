@@ -13,7 +13,7 @@ def vers_ma_page_post():
 
     print("Nom reçu : ", name)
 
-    new_post = IdentifiantPerdue(
+    new_post = IdentifiantPerdus(
         nom=name
     )
 
